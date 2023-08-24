@@ -18,4 +18,6 @@ class Evento(models.Model):
     def __srt__(self):
         return self.titulo
     def get_data_evento(self):
-        return self.data_evento.strftime('%d/%m/%Y %H:%M')
+        return self.data_evento.strftime('%d/%m/%Y %H:%MHrs')
+    def get_data_input_evento(self):
+        return self.data_evento.strftime('%Y/%m/%d')
