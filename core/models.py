@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.contrib.auth import login, logout, authenticate
-from django.contrib.auth.decorators import login_required
+from datetime import datetime,timedelta, time,date
 
 
 # Create your models here.
@@ -21,3 +20,11 @@ class Evento(models.Model):
         return self.data_evento.strftime('%d/%m/%Y %H:%MHrs')
     def get_data_input_evento(self):
         return self.data_evento.strftime('%Y/%m/%d')
+
+    def get_evento_atrasado(self):
+        data= self.data_evento
+        if datetime.combine(date(data), time(0, 0,0,0)) < datetime.now():
+            return True
+        else:
+            return False
+

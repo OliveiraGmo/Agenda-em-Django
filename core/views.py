@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.shortcuts import render , redirect
 from core.models import Evento
 from django.contrib.auth import login, logout, authenticate
@@ -23,7 +24,13 @@ def submit_login(request):
 @login_required(login_url='/login/')
 def lista_eventos(request):
     usuario = request.user
-    evento = Evento.objects.filter(usuario=usuario)
+    data_atual = datetime.now()
+    evento = Evento.objects.filter(usuario=usuario,
+                                   data_evento__gt=data_atual)
+    #(__gt)se o campo data_evento for maior que a data_atual
+    # e será mostrados os eventos futuros, Usando __lt será exibido
+    #os eventos passados
+    #para django não temos >(maior) OU <(MENOR) usamos __gt e __lt
     dados = {'eventos': evento}
     return render(request, 'agenda.html',dados)
 def logout_user(request):
